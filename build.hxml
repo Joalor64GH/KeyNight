@@ -2,4 +2,4 @@
 -cpp export
 -lib raylib-hx
 -main Main
---cmd start .\export\Main.exe
+--cmd xcopy /Y /E /H /C /I .\assets .\export\assets && .\export\Main.exe
