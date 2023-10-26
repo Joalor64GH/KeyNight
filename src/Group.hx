@@ -92,7 +92,7 @@ class Group<T:Basic> extends Basic
 		return createObject();
 	}
 
-	override public function update(dt:Float)
+	override function update(dt:Float)
 	{
 		for (obj in members)
 		{
@@ -101,7 +101,7 @@ class Group<T:Basic> extends Basic
 		}
 	}
 
-	override public function draw()
+	override function draw()
 	{
 		for (obj in members)
 		{
