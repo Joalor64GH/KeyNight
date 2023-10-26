@@ -3,13 +3,23 @@
 	"tasks": [
 		{
 			"type": "hxml",
-			"file": "build.hxml",
+			"file": "build-release.hxml",
 			"group": {
 				"kind": "build",
 				"isDefault": true
 			},
 			"problemMatcher": [],
-			"label": "hxml: build.hxml"
+			"label": "hxml: release"
+		},
+		{
+			"type": "hxml",
+			"file": "build.hxml",
+			"problemMatcher": [],
+			"label": "hxml: debug",
+			"presentation": {
+				"reveal": "silent",
+				"close": true
+			}
 		}
 	]
 }

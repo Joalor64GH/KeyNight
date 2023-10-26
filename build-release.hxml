@@ -1,7 +1,5 @@
 -cp src
 -cpp export
--lib hxcpp-debug-server
 -lib raylib-hx
 -main Main
---debug
 --cmd xcopy /Y /E /H /C /I .\assets .\export\assets
