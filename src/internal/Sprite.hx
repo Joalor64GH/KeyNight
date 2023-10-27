@@ -141,7 +141,7 @@ class Sprite extends Basic
 			_rect.height = -_rect.height;
 
 		// draw the whole thing
-		Rl.drawTexturePro(texture, _rect, _rect2, origin.vector, angle, Rl.Colors.WHITE);
+		Rl.drawTexturePro(frame != null ? frames.texture : texture, _rect, _rect2, origin.vector, angle, Rl.Colors.WHITE);
 	}
 
 	override function destroy()

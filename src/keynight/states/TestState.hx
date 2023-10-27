@@ -17,4 +17,10 @@ class TestState extends State
 		bf.frames = Atlas.fromSparrow(Rl.loadTexture("assets/images/BOYFRIEND.png"), File.getContent("assets/images/BOYFRIEND.xml"));
 		add(bf);
 	}
+
+	override function update(dt:Float)
+	{
+		super.update(dt);
+		bf.angle += 3 * dt;
+	}
 }
