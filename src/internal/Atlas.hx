@@ -1,6 +1,6 @@
 package internal;
 
-class Atlas
+final class Atlas
 {
 	static inline function boundFrame(texture:Rl.Texture2D, frame:Frame)
 	{
@@ -21,13 +21,30 @@ class Atlas
 			frames: []
 		};
 
-		for (child in xml.firstChild().elements())
+		var textureAtlasNode:Xml = null;
+		for (child in xml.elements())
+		{
+			if (child.nodeType == Element && child.nodeName == "TextureAtlas")
+			{
+				textureAtlasNode = child;
+				break;
+			}
+		}
+		if (textureAtlasNode == null)
+		{
+			trace("[Sparrow Atlas] Cannot find the TextureAtlas node.");
+			return null;
+		}
+
+		for (child in textureAtlasNode.elements())
 		{
 			var frame:Frame = {
 				sourceX: Std.parseFloat(child.get("x")),
 				sourceY: Std.parseFloat(child.get("y")),
 				sourceWidth: Std.parseFloat(child.get("width")),
-				sourceHeight: Std.parseFloat(child.get("height"))
+				sourceHeight: Std.parseFloat(child.get("height")),
+				width: 0,
+				height: 0
 			};
 
 			var frameX:Float = Std.parseFloat(child.get("frameX"));
@@ -41,10 +58,14 @@ class Atlas
 			var frameWidth:Float = Std.parseFloat(child.get("frameWidth"));
 			if (!Math.isNaN(frameWidth) && frameWidth != 0)
 				frame.width = frameWidth;
+			else
+				frame.width = frame.sourceWidth;
 
 			var frameHeight:Float = Std.parseFloat(child.get("frameHeight"));
 			if (!Math.isNaN(frameHeight) && frameHeight != 0)
 				frame.height = frameHeight;
+			else
+				frame.height = frame.sourceHeight;
 
 			boundFrame(texture, frame);
 
@@ -67,8 +88,8 @@ typedef Frame =
 	sourceY:Float,
 	sourceWidth:Float,
 	sourceHeight:Float,
+	width:Float,
+	height:Float,
 	?offsetX:Float,
-	?offsetY:Float,
-	?width:Float,
-	?height:Float
+	?offsetY:Float
 }

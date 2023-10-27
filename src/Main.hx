@@ -3,7 +3,7 @@ package;
 import internal.Game;
 import keynight.states.TestState;
 
-class Main
+final class Main
 {
 	static function main()
 	{

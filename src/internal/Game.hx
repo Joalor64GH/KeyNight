@@ -1,6 +1,6 @@
 package internal;
 
-class Game
+final class Game
 {
 	public static var width(default, null):Int;
 	public static var height(default, null):Int;
