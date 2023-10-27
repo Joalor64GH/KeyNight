@@ -1,3 +1,5 @@
+package internal;
+
 class Game
 {
 	public static var width(default, null):Int;

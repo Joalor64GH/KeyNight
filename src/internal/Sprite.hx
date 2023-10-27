@@ -1,3 +1,5 @@
+package internal;
+
 class Sprite extends Basic
 {
 	static var _rect:Rl.Rectangle = Rl.Rectangle.create(0, 0, 0, 0);

@@ -1,3 +1,5 @@
+package internal;
+
 class Basic
 {
 	public var alive:Bool = true;

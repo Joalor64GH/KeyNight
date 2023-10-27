@@ -1,4 +1,7 @@
-import states.TestState;
+package;
+
+import internal.Game;
+import keynight.states.TestState;
 
 class Main
 {

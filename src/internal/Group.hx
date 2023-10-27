@@ -1,3 +1,5 @@
+package internal;
+
 class Group<T:Basic> extends Basic
 {
 	public var members(default, null):Array<T> = [];

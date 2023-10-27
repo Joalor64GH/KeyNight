@@ -1,3 +1,5 @@
+package internal;
+
 @:forward abstract Point(BasePoint) to BasePoint from BasePoint
 {
 	static var _pool:Group<BasePoint> = new Group<BasePoint>();

@@ -1,4 +1,7 @@
-package states;
+package keynight.states;
+
+import internal.Sprite;
+import internal.State;
 
 class TestState extends State
 {
