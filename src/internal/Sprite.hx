@@ -68,6 +68,7 @@ class Sprite extends Basic
 		_rect.width = texture.width;
 		_rect.height = texture.height;
 
+		// scaling
 		var sx:Float = scale.x;
 		var sy:Float = scale.y;
 

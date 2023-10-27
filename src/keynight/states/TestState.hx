@@ -5,20 +5,13 @@ import internal.State;
 
 class TestState extends State
 {
-	var cat:Sprite;
+	var bf:Sprite;
 
 	public function new()
 	{
 		super();
 
-		cat = new Sprite().load(Rl.loadTexture("assets/images/cat.jpg"));
-		cat.flipX = cat.flipY = true;
-		add(cat);
-	}
-
-	override function update(dt:Float)
-	{
-		super.update(dt);
-		cat.angle += 3 * dt;
+		bf = new Sprite().load(Rl.loadTexture("assets/images/BOYFRIEND.png"));
+		add(bf);
 	}
 }
