@@ -2,7 +2,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"preLaunchTask": "hxml: debug",
+			"preLaunchTask": "preDebugTask",
 			"name": "HXCPP",
 			"type": "hxcpp",
 			"request": "launch",

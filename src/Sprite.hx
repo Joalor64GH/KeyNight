@@ -6,6 +6,8 @@ class Sprite extends Basic
 	public var x:Float;
 	public var y:Float;
 
+	public var angle:Float = 0;
+
 	public var width(default, null):Float = 0;
 	public var height(default, null):Float = 0;
 
@@ -68,7 +70,7 @@ class Sprite extends Basic
 		_rect2.width = texture.width * scale.x;
 		_rect2.height = texture.height * scale.y;
 
-		Rl.drawTexturePro(texture, _rect, _rect2, origin.vector, 0, Rl.Colors.WHITE);
+		Rl.drawTexturePro(texture, _rect, _rect2, origin.vector, angle, Rl.Colors.WHITE);
 	}
 
 	override function destroy()
