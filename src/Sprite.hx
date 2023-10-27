@@ -6,6 +6,8 @@ class Sprite extends Basic
 	public var x:Float;
 	public var y:Float;
 
+	public var flipX:Bool = false;
+	public var flipY:Bool = false;
 	public var angle:Float = 0;
 
 	public var width(default, null):Float = 0;
@@ -64,11 +66,24 @@ class Sprite extends Basic
 		_rect.width = texture.width;
 		_rect.height = texture.height;
 
+		var sx:Float = scale.x;
+		var sy:Float = scale.y;
+
+		if (flipX)
+			sx = -sx;
+		if (flipY)
+			sy = -sy;
+
+		if (sx < 0)
+			_rect.width = -_rect.width;
+		if (sy < 0)
+			_rect.height = -_rect.height;
+
 		// destination rectangle
 		_rect2.x = x + origin.x - offset.x;
 		_rect2.y = y + origin.y - offset.y;
-		_rect2.width = texture.width * scale.x;
-		_rect2.height = texture.height * scale.y;
+		_rect2.width = texture.width * Math.abs(sx);
+		_rect2.height = texture.height * Math.abs(sy);
 
 		Rl.drawTexturePro(texture, _rect, _rect2, origin.vector, angle, Rl.Colors.WHITE);
 	}
