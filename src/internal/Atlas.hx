@@ -39,6 +39,7 @@ final class Atlas
 		for (child in textureAtlasNode.elements())
 		{
 			var frame:Frame = {
+				name: child.get("name"),
 				sourceX: Std.parseFloat(child.get("x")),
 				sourceY: Std.parseFloat(child.get("y")),
 				sourceWidth: Std.parseFloat(child.get("width")),
@@ -84,6 +85,7 @@ typedef AtlasFrames =
 
 typedef Frame =
 {
+	name:String,
 	sourceX:Float,
 	sourceY:Float,
 	sourceWidth:Float,
