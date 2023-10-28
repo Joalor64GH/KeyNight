@@ -2,16 +2,25 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "game: Build Release",
+			"label": "Game: Make Release Build",
 			"type": "shell",
-            "command": "haxe",
-            "args": ["${workspaceFolder}/build-release.hxml"],
+			"command": "haxe",
+			"args": [
+				"${workspaceFolder}/build-release.hxml"
+			],
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
 		},
 		{
 			"label": "preDebugTask",
 			"type": "shell",
-            "command": "haxe",
-            "args": ["${workspaceFolder}/build.hxml"],
+			"command": "haxe",
+			"args": [
+				"${workspaceFolder}/build.hxml"
+			],
 			"presentation": {
 				"reveal": "silent",
 				"close": true

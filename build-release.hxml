@@ -2,4 +2,4 @@
 -cpp export
 -lib raylib-hx
 -main Main
---cmd xcopy /Y /E /H /C /I .\assets .\export\assets
+--cmd rmdir /s /q .\export\assets && xcopy /Y /E /H /C /I .\assets .\export\assets

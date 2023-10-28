@@ -19,9 +19,4 @@ class TestState extends State
 		test.play('danceLeft');
 		add(test);
 	}
-
-	override function update(dt:Float) {
-		super.update(dt);
-		test.angle += 4 * dt;
-	}
 }

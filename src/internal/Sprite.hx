@@ -7,9 +7,10 @@ using StringTools;
 
 class Sprite extends Basic
 {
+	// for rendering
 	static var _rect:Rl.Rectangle = Rl.Rectangle.create(0, 0, 0, 0);
 	static var _rect2:Rl.Rectangle = Rl.Rectangle.create(0, 0, 0, 0);
-	static var originVector:Vector2 = Vector2.create(0, 0);
+	static var renderOrigin:Vector2 = Vector2.create(0, 0);
 
 	public var x:Float;
 	public var y:Float;
@@ -41,7 +42,7 @@ class Sprite extends Basic
 
 	public function set_animationFrame(value:Float):Float
 	{
-		if (animationFrame >= 0 && frames != null)
+		if (animation != null)
 		{
 			var frame:Frame = animation.frames[Math.floor(value)];
 			if (frame != null)
@@ -60,8 +61,9 @@ class Sprite extends Basic
 			frames = value;
 			animationFrame = 0;
 
-			width = frameWidth;
-			height = frameHeight;
+			var frame:Frame = frames.frames[0];
+			width = frameWidth = frame.width;
+			height = frameHeight = frame.height;
 			centerOrigin();
 		}
 		else
@@ -96,6 +98,21 @@ class Sprite extends Basic
 		height = frameHeight * Math.abs(scale.y);
 		centerOrigin();
 		offset.set((width - frameWidth) / -2, (height - frameHeight) / -2);
+	}
+
+	public function setGraphicSize(width:Float = 0, height:Float = 0)
+	{
+		if (width <= 0 && height <= 0)
+			return;
+
+		var newScaleX:Float = width / frameWidth;
+		var newScaleY:Float = height / frameHeight;
+		scale.set(newScaleX, newScaleY);
+
+		if (width <= 0)
+			scale.x = newScaleY;
+		else if (height <= 0)
+			scale.y = newScaleX;
 	}
 
 	public function centerOrigin()
@@ -266,7 +283,7 @@ class Sprite extends Basic
 		var frame:Frame = null;
 
 		// source rectangle
-		if (animationFrame < 0)
+		if (frames == null)
 		{
 			_rect.x = 0;
 			_rect.y = 0;
@@ -275,7 +292,7 @@ class Sprite extends Basic
 		}
 		else
 		{
-			frame = animation.frames[Math.floor(animationFrame)];
+			frame = animation != null ? animation.frames[Math.floor(animationFrame)] : frames.frames[0];
 			_rect.x = frame.sourceX;
 			_rect.y = frame.sourceY;
 			_rect.width = frame.sourceWidth;
@@ -291,14 +308,14 @@ class Sprite extends Basic
 		if (flipY)
 			sy = -sy;
 
-		var absScaleX:Float = Math.abs(scale.x);
-		var absScaleY:Float = Math.abs(scale.y);
-
 		// destination rectangle
-		_rect2.x = x + origin.x - offset.x - (frame.offsetX ?? 0);
-		_rect2.y = y + origin.y - offset.y - (frame.offsetY ?? 0);
-		_rect2.width = _rect.width * absScaleX;
-		_rect2.height = _rect.height * absScaleY;
+		_rect2.x = x + origin.x - offset.x;
+		_rect2.y = y + origin.y - offset.y;
+		_rect2.width = _rect.width * Math.abs(scale.x);
+		_rect2.height = _rect.height * Math.abs(scale.y);
+
+		renderOrigin.x = origin.x + (frame.offsetX ?? 0);
+		renderOrigin.y = origin.y + (frame.offsetY ?? 0);
 
 		// apply flips to source rectangle
 		if (sx < 0)
@@ -306,12 +323,8 @@ class Sprite extends Basic
 		if (sy < 0)
 			_rect.height = -_rect.height;
 
-		// trace("source", _rect.x, _rect.y, _rect.width, _rect.height);
-		// trace("dest", _rect2.x, _rect2.y, _rect2.width, _rect2.height);
-		// trace("origin", origin.x, origin.y);
-
 		// draw the whole thing
-		Rl.drawTexturePro(frame != null ? frames.texture : texture, _rect, _rect2, origin.vector, angle, Rl.Colors.WHITE);
+		Rl.drawTexturePro(frame != null ? frames.texture : texture, _rect, _rect2, renderOrigin, angle, Rl.Colors.WHITE);
 	}
 
 	override function destroy()
