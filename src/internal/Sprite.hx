@@ -295,7 +295,7 @@ class Sprite extends Basic
 		var absScaleY:Float = Math.abs(scale.y);
 
 		// destination rectangle
-		_rect2.x = x + origin.x - offset.y - (frame.offsetX ?? 0);
+		_rect2.x = x + origin.x - offset.x - (frame.offsetX ?? 0);
 		_rect2.y = y + origin.y - offset.y - (frame.offsetY ?? 0);
 		_rect2.width = _rect.width * absScaleX;
 		_rect2.height = _rect.height * absScaleY;
