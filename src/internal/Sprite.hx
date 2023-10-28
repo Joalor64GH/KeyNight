@@ -46,9 +46,18 @@ class Sprite extends Basic
 
 	public function set_frames(value:AtlasFrames):AtlasFrames
 	{
-		frames = value;
-		frameIndex = value != null ? 0 : null;
-		centerOrigin();
+		if (value != null)
+		{
+			frames = value;
+			frameIndex = 0;
+
+			width = frameWidth;
+			height = frameHeight;
+			centerOrigin();
+		}
+		else
+			frameIndex = null;
+
 		return value;
 	}
 
@@ -123,8 +132,8 @@ class Sprite extends Basic
 		// destination rectangle
 		_rect2.x = x + origin.x - offset.x;
 		_rect2.y = y + origin.y - offset.y;
-		_rect2.width = _rect.width * Math.abs(sx);
-		_rect2.height = _rect.height * Math.abs(sy);
+		_rect2.width = width;
+		_rect2.height = height;
 
 		if (frame != null)
 		{
@@ -149,8 +158,10 @@ class Sprite extends Basic
 		super.destroy();
 
 		scale.kill();
+		origin.kill();
 		offset.kill();
 		scale = null;
+		origin = null;
 		offset = null;
 	}
 }
