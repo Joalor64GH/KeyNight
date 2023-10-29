@@ -10,7 +10,7 @@ class Sprite extends Basic
 	// for rendering
 	static var _rect:Rl.Rectangle = Rl.Rectangle.create(0, 0, 0, 0);
 	static var _rect2:Rl.Rectangle = Rl.Rectangle.create(0, 0, 0, 0);
-	static var renderOrigin:Vector2 = Vector2.create(0, 0);
+	static var _renderOrigin:Vector2 = Vector2.create(0, 0);
 
 	public var x:Float;
 	public var y:Float;
@@ -314,8 +314,8 @@ class Sprite extends Basic
 		_rect2.width = _rect.width * Math.abs(scale.x);
 		_rect2.height = _rect.height * Math.abs(scale.y);
 
-		renderOrigin.x = origin.x + (frame.offsetX ?? 0);
-		renderOrigin.y = origin.y + (frame.offsetY ?? 0);
+		_renderOrigin.x = origin.x + (frame.offsetX ?? 0);
+		_renderOrigin.y = origin.y + (frame.offsetY ?? 0);
 
 		// apply flips to source rectangle
 		if (sx < 0)
@@ -324,7 +324,7 @@ class Sprite extends Basic
 			_rect.height = -_rect.height;
 
 		// draw the whole thing
-		Rl.drawTexturePro(frame != null ? frames.texture : texture, _rect, _rect2, renderOrigin, angle, Rl.Colors.WHITE);
+		Rl.drawTexturePro(frame != null ? frames.texture : texture, _rect, _rect2, _renderOrigin, angle, Rl.Colors.WHITE);
 	}
 
 	override function destroy()

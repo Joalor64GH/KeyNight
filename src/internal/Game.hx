@@ -1,5 +1,7 @@
 package internal;
 
+import internal.Assets;
+
 final class Game
 {
 	public static var width(default, null):Int;
@@ -23,6 +25,8 @@ final class Game
 			if (_nextState != null)
 			{
 				state.destroy();
+				Assets.clear();
+
 				state = _nextState();
 
 				_nextState = null;
@@ -37,6 +41,8 @@ final class Game
 
 			Rl.endDrawing();
 		}
+
+		Assets.clear();
 
 		Rl.closeWindow();
 	}

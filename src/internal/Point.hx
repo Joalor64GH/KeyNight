@@ -2,7 +2,7 @@ package internal;
 
 @:forward abstract Point(BasePoint) to BasePoint from BasePoint
 {
-	static var _pool:Group<BasePoint> = new Group<BasePoint>();
+	static final _pool:Group<BasePoint> = new Group<BasePoint>();
 
 	public static function get(x:Float = 0, y:Float = 0):Point
 	{
