@@ -1,5 +1,7 @@
 -cp src
 -cpp export
 -lib raylib-hx
+--define hide-console
 -main Main
---cmd rmdir /s /q .\export\assets && xcopy /Y /E /H /C /I .\assets .\export\assets
+--cmd if exist .\export\assets\ rmdir /s /q .\export\assets
+--cmd xcopy /Y /E /H /C /I .\assets .\export\assets
