@@ -1,2 +1,2 @@
 # KeyNight
-The ultimate open-source 4K rhythm gaming experience!
+The open-source 4K rhythm gaming experience!
