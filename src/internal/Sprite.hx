@@ -282,6 +282,9 @@ class Sprite extends Basic
 	{
 		var frame:Frame = null;
 
+		_renderOrigin.x = origin.x;
+		_renderOrigin.y = origin.y;
+
 		// source rectangle
 		if (frames == null)
 		{
@@ -293,6 +296,12 @@ class Sprite extends Basic
 		else
 		{
 			frame = animation != null ? animation.frames[Math.floor(animationFrame)] : frames.frames[0];
+
+			if (frame.offsetX != null)
+				_renderOrigin.x += frame.offsetX;
+			if (frame.offsetY != null)
+				_renderOrigin.y += frame.offsetY;
+
 			_rect.x = frame.sourceX;
 			_rect.y = frame.sourceY;
 			_rect.width = frame.sourceWidth;
@@ -313,9 +322,6 @@ class Sprite extends Basic
 		_rect2.y = y + origin.y - offset.y;
 		_rect2.width = _rect.width * Math.abs(scale.x);
 		_rect2.height = _rect.height * Math.abs(scale.y);
-
-		_renderOrigin.x = origin.x + (frame.offsetX ?? 0);
-		_renderOrigin.y = origin.y + (frame.offsetY ?? 0);
 
 		// apply flips to source rectangle
 		if (sx < 0)
