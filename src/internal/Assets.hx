@@ -87,8 +87,5 @@ class AssetCache<T>
 		throw haxe.exceptions.NotImplementedException;
 	}
 
-	function _unloadAsset(asset:T)
-	{
-		throw haxe.exceptions.NotImplementedException;
-	}
+	function _unloadAsset(asset:T) {}
 }
