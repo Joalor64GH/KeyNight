@@ -88,6 +88,7 @@ class TextureCache extends AssetCache<Rl.Texture2D>
 	}
 }
 
+@:allow(internal.Game)
 class AssetCache<T>
 {
 	var _map:Map<String, T> = [];

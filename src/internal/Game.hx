@@ -33,6 +33,12 @@ final class Game
 				_nextState = null;
 			}
 
+			for (sound in Assets.music._map)
+			{
+				if (Rl.isMusicStreamPlaying(sound))
+					Rl.updateMusicStream(sound);
+			}
+
 			state.update(Rl.getFrameTime());
 
 			Rl.beginDrawing();
