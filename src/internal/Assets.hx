@@ -6,11 +6,23 @@ final class Assets
 {
 	public static final assetsPath:String = "./assets";
 
+	public static final music:MusicCache = new MusicCache();
+	public static final sounds:SoundCache = new SoundCache();
 	public static final textures:TextureCache = new TextureCache();
 
-	static inline function formatPath(id:String)
+	public static inline function formatPath(id:String)
 	{
 		return '$assetsPath/$id';
+	}
+
+	public static function getMusic(id:String):Null<Rl.Music>
+	{
+		return music.get(formatPath('music/$id.ogg'));
+	}
+
+	public static function getSound(id:String):Null<Rl.Sound>
+	{
+		return sounds.get(formatPath('sounds/$id.ogg'));
 	}
 
 	public static function getTexture(id:String):Null<Rl.Texture2D>
@@ -34,6 +46,32 @@ final class Assets
 	public static function clear()
 	{
 		textures.clear();
+	}
+}
+
+class MusicCache extends AssetCache<Rl.Music>
+{
+	override function _loadAsset(id:String):Rl.Music
+	{
+		return Rl.loadMusicStream(id);
+	}
+
+	override function _unloadAsset(asset:Rl.Music)
+	{
+		Rl.unloadMusicStream(asset);
+	}
+}
+
+class SoundCache extends AssetCache<Rl.Sound>
+{
+	override function _loadAsset(id:String):Rl.Sound
+	{
+		return Rl.loadSound(id);
+	}
+
+	override function _unloadAsset(asset:Rl.Sound)
+	{
+		Rl.unloadSound(asset);
 	}
 }
 

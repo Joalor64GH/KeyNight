@@ -16,6 +16,7 @@ final class Game
 		Game.height = height;
 
 		Rl.initWindow(width, height, windowTitle);
+		Rl.initAudioDevice();
 		Rl.setTargetFPS(60);
 
 		state = initialState();
@@ -44,6 +45,7 @@ final class Game
 
 		Assets.clear();
 
+		Rl.closeAudioDevice();
 		Rl.closeWindow();
 	}
 
