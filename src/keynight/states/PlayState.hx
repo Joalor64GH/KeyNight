@@ -36,7 +36,10 @@ class PlayState extends State
 		notes = new Group<Note>();
 		add(notes);
 
-		notes.add(new Note(25));
+		notes.add(new Note(12800.0, 0));
+		notes.add(new Note(13199.999, 1));
+		notes.add(new Note(13599.999, 2));
+		notes.add(new Note(13999.999, 3));
 
 		Rl.playMusicStream(music);
 	}
@@ -49,7 +52,9 @@ class PlayState extends State
 		{
 			if (note.alive)
 			{
+				note.x = receptors.members[note.column].x;
 				note.y = 25 - ((Rl.getMusicTimePlayed(music) * 1000) - note.time);
+				note.angle = noteRotations[note.column];
 			}
 		}
 	}
