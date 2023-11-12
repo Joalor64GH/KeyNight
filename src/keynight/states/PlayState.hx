@@ -33,13 +33,17 @@ class PlayState extends State
 			receptors.add(receptor);
 		}
 
+		// cache hold textures
+		Assets.getTexture("hold");
+		Assets.getTexture("hold-end");
+
 		notes = new Group<Note>();
 		add(notes);
 
-		notes.add(new Note(12800.0, 0));
-		notes.add(new Note(13199.999, 1));
-		notes.add(new Note(13599.999, 2));
-		notes.add(new Note(13999.999, 3));
+		notes.add(new Note(12800.0, 0, 3));
+		notes.add(new Note(13199.999, 1, 3));
+		notes.add(new Note(13599.999, 2, 3));
+		notes.add(new Note(13999.999, 3, 3));
 
 		Rl.playMusicStream(music);
 	}
