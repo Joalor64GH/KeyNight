@@ -1,9 +1,7 @@
 package internal;
 
-final class Atlas
-{
-	static inline function boundFrame(texture:Rl.Texture2D, frame:Frame)
-	{
+final class Atlas {
+	static inline function boundFrame(texture:Rl.Texture2D, frame:Frame) {
 		final topRight = frame.sourceX + frame.sourceWidth;
 		if (topRight > texture.width)
 			frame.sourceWidth -= topRight - texture.width;
@@ -13,8 +11,7 @@ final class Atlas
 			frame.sourceHeight -= bottomLeft - texture.height;
 	}
 
-	public static function fromSparrow(texture:Rl.Texture2D, description:String):AtlasFrames
-	{
+	public static function fromSparrow(texture:Rl.Texture2D, description:String):AtlasFrames {
 		final xml = Xml.parse(description);
 		final atlasFrames:AtlasFrames = {
 			texture: texture,
@@ -22,22 +19,18 @@ final class Atlas
 		};
 
 		var textureAtlasNode:Xml = null;
-		for (child in xml.elements())
-		{
-			if (child.nodeType == Element && child.nodeName == "TextureAtlas")
-			{
+		for (child in xml.elements()) {
+			if (child.nodeType == Element && child.nodeName == "TextureAtlas") {
 				textureAtlasNode = child;
 				break;
 			}
 		}
-		if (textureAtlasNode == null)
-		{
+		if (textureAtlasNode == null) {
 			trace("[Sparrow Atlas] Cannot find the TextureAtlas node.");
 			return null;
 		}
 
-		for (child in textureAtlasNode.elements())
-		{
+		for (child in textureAtlasNode.elements()) {
 			final frame:Frame = {
 				name: child.get("name"),
 				sourceX: Std.parseFloat(child.get("x")),
@@ -77,14 +70,12 @@ final class Atlas
 	}
 }
 
-typedef AtlasFrames =
-{
+typedef AtlasFrames = {
 	texture:Rl.Texture2D,
 	frames:Array<Frame>
 }
 
-typedef Frame =
-{
+typedef Frame = {
 	name:String,
 	sourceX:Float,
 	sourceY:Float,

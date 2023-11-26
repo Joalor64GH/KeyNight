@@ -3,16 +3,14 @@ package keynight.gameplay;
 import internal.Assets;
 import internal.Sprite;
 
-class Note extends Sprite
-{
+class Note extends Sprite {
 	static var holdSprite:Sprite = new Sprite();
 
 	public var time(default, null):Float;
 	public var column(default, null):Int;
 	public var holdLength:Int = 0;
 
-	public function new(time:Float, column:Int, holdLength:Int = 0)
-	{
+	public function new(time:Float, column:Int, holdLength:Int = 0) {
 		super();
 
 		this.time = time;
@@ -22,15 +20,12 @@ class Note extends Sprite
 		load(Assets.getTexture("note"));
 	}
 
-	override function draw()
-	{
-		if (holdLength > 0)
-		{
+	override function draw() {
+		if (holdLength > 0) {
 			holdSprite.load(Assets.getTexture("hold"));
 
 			var startY = height / 2;
-			for (i in 0...holdLength)
-			{
+			for (i in 0...holdLength) {
 				if (i == holdLength - 1)
 					holdSprite.load(Assets.getTexture("hold-end"));
 

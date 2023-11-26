@@ -5,22 +5,21 @@ import internal.Group;
 import internal.Assets;
 import internal.Sprite;
 import internal.State;
+import keynight.components.Conductor;
 import keynight.gameplay.Note;
 
-class PlayState extends State
-{
+class PlayState extends State {
 	static final noteRotations:Array<Int> = [90, 0, 180, -90];
 
-	var music:Rl.Music;
+	var conductor:Conductor;
 
 	var receptors:Group<Sprite>;
 	var notes:Group<Note>;
 
-	public function new()
-	{
+	public function new() {
 		super();
 
-		music = Assets.getMusic("testSong");
+		conductor = new Conductor(Assets.getMusic("testSong"), 150);
 
 		final bg = new Sprite().load(Assets.getTexture("bg"));
 		bg.alpha = 0.3;
@@ -30,8 +29,7 @@ class PlayState extends State
 		add(receptors);
 
 		final separation = 140;
-		for (i in 0...4)
-		{
+		for (i in 0...4) {
 			final receptor = new Sprite(Game.width / 4 + separation * i + separation / 3, 25).load(Assets.getTexture("receptor"));
 			receptor.angle = noteRotations[i];
 			receptors.add(receptor);
@@ -49,18 +47,15 @@ class PlayState extends State
 		notes.add(new Note(470, 2, 3));
 		notes.add(new Note(500, 3, 3));
 
-		Rl.playMusicStream(music);
+		conductor.play();
 	}
 
-	override function update(dt:Float)
-	{
+	override function update(dt:Float) {
 		super.update(dt);
 
-		final time = Rl.getMusicTimePlayed(music) * 1000;
-		for (note in notes.members)
-		{
-			if (note.alive)
-			{
+		final time = conductor.position;
+		for (note in notes.members) {
+			if (note.alive) {
 				final receptor = receptors.members[note.column];
 				note.x = receptor.x;
 				note.y = receptor.y - (time - note.time);

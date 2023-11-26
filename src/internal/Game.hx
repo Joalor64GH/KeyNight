@@ -2,16 +2,14 @@ package internal;
 
 import internal.Assets;
 
-final class Game
-{
+final class Game {
 	public static var width(default, null):Int;
 	public static var height(default, null):Int;
 
 	public static var state(default, null):State;
 	static var _nextState:Void->State;
 
-	public static function init(width:Int, height:Int, windowTitle:String, FPS:Int, initialState:Void->State)
-	{
+	public static function init(width:Int, height:Int, windowTitle:String, FPS:Int, initialState:Void->State) {
 		Game.width = width;
 		Game.height = height;
 
@@ -21,10 +19,8 @@ final class Game
 
 		state = initialState();
 
-		while (!Rl.windowShouldClose())
-		{
-			if (_nextState != null)
-			{
+		while (!Rl.windowShouldClose()) {
+			if (_nextState != null) {
 				state.destroy();
 				Assets.clear();
 
@@ -33,8 +29,7 @@ final class Game
 				_nextState = null;
 			}
 
-			for (sound in Assets.music._map)
-			{
+			for (sound in Assets.music._map) {
 				if (Rl.isMusicStreamPlaying(sound))
 					Rl.updateMusicStream(sound);
 			}
@@ -55,8 +50,7 @@ final class Game
 		Rl.closeWindow();
 	}
 
-	public static function switchState(state:Void->State)
-	{
+	public static function switchState(state:Void->State) {
 		_nextState = state;
 	}
 }

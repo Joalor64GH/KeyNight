@@ -1,7 +1,6 @@
 package internal;
 
-class Basic
-{
+class Basic {
 	public var alive:Bool = true;
 	public var exists:Bool = true;
 
@@ -10,20 +9,17 @@ class Basic
 
 	public function new() {}
 
-	public function kill()
-	{
+	public function kill() {
 		alive = false;
 		exists = false;
 	}
 
-	public function revive()
-	{
+	public function revive() {
 		alive = true;
 		exists = true;
 	}
 
-	public function destroy()
-	{
+	public function destroy() {
 		exists = false;
 	}
 
