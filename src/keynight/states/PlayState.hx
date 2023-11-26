@@ -25,10 +25,10 @@ class PlayState extends State
 		receptors = new Group<Sprite>();
 		add(receptors);
 
-		final separation:Int = 140;
+		final separation = 140;
 		for (i in 0...4)
 		{
-			var receptor:Sprite = new Sprite(Game.width / 4 + separation * i + separation / 3, 25).load(Assets.getTexture("receptor"));
+			final receptor = new Sprite(Game.width / 4 + separation * i + separation / 3, 25).load(Assets.getTexture("receptor"));
 			receptor.angle = noteRotations[i];
 			receptors.add(receptor);
 		}
@@ -52,12 +52,14 @@ class PlayState extends State
 	{
 		super.update(dt);
 
+		final time = Rl.getMusicTimePlayed(music) * 1000;
 		for (note in notes.members)
 		{
 			if (note.alive)
 			{
-				note.x = receptors.members[note.column].x;
-				note.y = 25 - ((Rl.getMusicTimePlayed(music) * 1000) - note.time);
+				final receptor = receptors.members[note.column];
+				note.x = receptor.x;
+				note.y = receptor.y - (time - note.time);
 				note.angle = noteRotations[note.column];
 			}
 		}

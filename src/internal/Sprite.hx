@@ -1,6 +1,5 @@
 package internal;
 
-import Rl.Vector2;
 import internal.Atlas;
 
 using StringTools;
@@ -8,16 +7,18 @@ using StringTools;
 class Sprite extends Basic
 {
 	// for rendering
-	static var _rect:Rl.Rectangle = Rl.Rectangle.create(0, 0, 0, 0);
-	static var _rect2:Rl.Rectangle = Rl.Rectangle.create(0, 0, 0, 0);
-	static var _renderOrigin:Vector2 = Vector2.create(0, 0);
+	static final _rect:Rl.Rectangle = Rl.Rectangle.create(0, 0, 0, 0);
+	static final _rect2:Rl.Rectangle = Rl.Rectangle.create(0, 0, 0, 0);
+	static final _renderOrigin:Rl.Vector2 = Rl.Vector2.create(0, 0);
+	static final _renderColor:Rl.Color = Rl.Color.create(255, 255, 255, 255);
 
 	public var x:Float;
 	public var y:Float;
+	public var angle:Float = 0;
 
 	public var flipX:Bool = false;
 	public var flipY:Bool = false;
-	public var angle:Float = 0;
+	public var alpha:Float = 1;
 
 	public var width(default, null):Float;
 	public var height(default, null):Float;
@@ -44,7 +45,7 @@ class Sprite extends Basic
 	{
 		if (animation != null)
 		{
-			var frame:Frame = animation.frames[Math.floor(value)];
+			final frame = animation.frames[Math.floor(value)];
 			if (frame != null)
 			{
 				frameWidth = frame.width;
@@ -61,7 +62,7 @@ class Sprite extends Basic
 			frames = value;
 			animationFrame = 0;
 
-			var frame:Frame = frames.frames[0];
+			final frame = frames.frames[0];
 			width = frameWidth = frame.width;
 			height = frameHeight = frame.height;
 			centerOrigin();
@@ -105,8 +106,8 @@ class Sprite extends Basic
 		if (width <= 0 && height <= 0)
 			return;
 
-		var newScaleX:Float = width / frameWidth;
-		var newScaleY:Float = height / frameHeight;
+		final newScaleX = width / frameWidth;
+		final newScaleY = height / frameHeight;
 		scale.set(newScaleX, newScaleY);
 
 		if (width <= 0)
@@ -127,7 +128,7 @@ class Sprite extends Basic
 
 	public function addAnimation(name:String, frames:Array<Int>, frameRate:Float = 30, looped:Bool = true, flipX:Bool = false, flipY:Bool = false)
 	{
-		var animation:Animation = {
+		final animation:Animation = {
 			frames: [],
 			frameRate: frameRate,
 			looped: looped,
@@ -156,7 +157,7 @@ class Sprite extends Basic
 
 	public function addAnimationByPrefix(name:String, prefix:String, frameRate:Float = 30, looped:Bool = true, flipX:Bool = false, flipY:Bool = false)
 	{
-		var animation:Animation = {
+		final animation:Animation = {
 			frames: [],
 			frameRate: frameRate,
 			looped: looped,
@@ -180,7 +181,7 @@ class Sprite extends Basic
 	public function addAnimationByIndices(name:String, prefix:String, indices:Array<Int>, postfix:String = "", frameRate:Float = 30, looped:Bool = true,
 			flipX:Bool = false, flipY:Bool = false)
 	{
-		var animation:Animation = {
+		final animation:Animation = {
 			frames: [],
 			frameRate: frameRate,
 			looped: looped,
@@ -188,7 +189,7 @@ class Sprite extends Basic
 			flipY: flipY
 		}
 
-		var allFrames:Array<Frame> = [];
+		final allFrames:Array<Frame> = [];
 		for (frame in frames.frames)
 		{
 			if (frame.name.startsWith(prefix) && frame.name.endsWith(postfix))
@@ -199,7 +200,7 @@ class Sprite extends Basic
 
 		for (i in indices)
 		{
-			var frame = allFrames[i];
+			final frame = allFrames[i];
 			if (frame != null)
 				animation.frames.push(frame);
 		}
@@ -210,7 +211,7 @@ class Sprite extends Basic
 
 	public function play(animName:String, force:Bool = false, frame:Int = 0)
 	{
-		var animationToPlay:Animation = animations.get(animName);
+		final animationToPlay = animations.get(animName);
 
 		if (!force && animation == animationToPlay)
 		{
@@ -280,57 +281,54 @@ class Sprite extends Basic
 
 	override function draw()
 	{
-		var frame:Frame = null;
-
-		_renderOrigin.x = origin.x;
-		_renderOrigin.y = origin.y;
-
-		// source rectangle
-		if (frames == null)
+		if (scale.x != 0 && scale.y != 0 && alpha > 0)
 		{
-			_rect.x = 0;
-			_rect.y = 0;
-			_rect.width = texture.width;
-			_rect.height = texture.height;
+			var frame:Frame = null;
+
+			_renderOrigin.x = origin.x;
+			_renderOrigin.y = origin.y;
+
+			// source rectangle
+			if (frames == null)
+			{
+				_rect.x = 0;
+				_rect.y = 0;
+				_rect.width = texture.width;
+				_rect.height = texture.height;
+			}
+			else
+			{
+				frame = animation != null ? animation.frames[Math.floor(animationFrame)] : frames.frames[0];
+
+				if (frame.offsetX != null)
+					_renderOrigin.x += frame.offsetX;
+				if (frame.offsetY != null)
+					_renderOrigin.y += frame.offsetY;
+
+				_rect.x = frame.sourceX;
+				_rect.y = frame.sourceY;
+				_rect.width = frame.sourceWidth;
+				_rect.height = frame.sourceHeight;
+			}
+
+			// destination rectangle
+			_rect2.x = x + origin.x - offset.x;
+			_rect2.y = y + origin.y - offset.y;
+			_rect2.width = _rect.width * Math.abs(scale.x);
+			_rect2.height = _rect.height * Math.abs(scale.y);
+
+			// apply flips to source rectangle
+			if ((flipX ? -scale.x : scale.x) < 0)
+				_rect.width = -_rect.width;
+			if ((flipY ? -scale.y : scale.y) < 0)
+				_rect.height = -_rect.height;
+
+			// set render alpha
+			_renderColor.a = cast Math.min(255 * alpha, 255);
+
+			// draw the whole thing
+			Rl.drawTexturePro(frame != null ? frames.texture : texture, _rect, _rect2, _renderOrigin, angle, _renderColor);
 		}
-		else
-		{
-			frame = animation != null ? animation.frames[Math.floor(animationFrame)] : frames.frames[0];
-
-			if (frame.offsetX != null)
-				_renderOrigin.x += frame.offsetX;
-			if (frame.offsetY != null)
-				_renderOrigin.y += frame.offsetY;
-
-			_rect.x = frame.sourceX;
-			_rect.y = frame.sourceY;
-			_rect.width = frame.sourceWidth;
-			_rect.height = frame.sourceHeight;
-		}
-
-		// scaling
-		var sx:Float = scale.x;
-		var sy:Float = scale.y;
-
-		if (flipX)
-			sx = -sx;
-		if (flipY)
-			sy = -sy;
-
-		// destination rectangle
-		_rect2.x = x + origin.x - offset.x;
-		_rect2.y = y + origin.y - offset.y;
-		_rect2.width = _rect.width * Math.abs(scale.x);
-		_rect2.height = _rect.height * Math.abs(scale.y);
-
-		// apply flips to source rectangle
-		if (sx < 0)
-			_rect.width = -_rect.width;
-		if (sy < 0)
-			_rect.height = -_rect.height;
-
-		// draw the whole thing
-		Rl.drawTexturePro(frame != null ? frames.texture : texture, _rect, _rect2, _renderOrigin, angle, Rl.Colors.WHITE);
 	}
 
 	override function destroy()

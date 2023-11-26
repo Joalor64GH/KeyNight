@@ -6,7 +6,7 @@ package internal;
 
 	public static function get(x:Float = 0, y:Float = 0):Point
 	{
-		var point:BasePoint = _pool.recycle(BasePoint);
+		final point = _pool.recycle(BasePoint);
 		point.set(x, y);
 		return point;
 	}

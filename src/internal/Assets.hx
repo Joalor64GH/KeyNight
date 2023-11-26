@@ -111,7 +111,7 @@ class AssetCache<T>
 
 	public function cache(id:String, ?toCache:T):Null<T>
 	{
-		var asset:T = _map.get(id);
+		var asset = _map.get(id);
 		if (asset != null)
 			_unloadAsset(asset);
 

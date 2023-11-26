@@ -4,19 +4,19 @@ final class Atlas
 {
 	static inline function boundFrame(texture:Rl.Texture2D, frame:Frame)
 	{
-		var topRight:Float = frame.sourceX + frame.sourceWidth;
+		final topRight = frame.sourceX + frame.sourceWidth;
 		if (topRight > texture.width)
 			frame.sourceWidth -= topRight - texture.width;
 
-		var bottomLeft:Float = frame.sourceY + frame.sourceHeight;
+		final bottomLeft = frame.sourceY + frame.sourceHeight;
 		if (bottomLeft > texture.height)
 			frame.sourceHeight -= bottomLeft - texture.height;
 	}
 
 	public static function fromSparrow(texture:Rl.Texture2D, description:String):AtlasFrames
 	{
-		var xml:Xml = Xml.parse(description);
-		var atlasFrames:AtlasFrames = {
+		final xml = Xml.parse(description);
+		final atlasFrames:AtlasFrames = {
 			texture: texture,
 			frames: []
 		};
@@ -38,7 +38,7 @@ final class Atlas
 
 		for (child in textureAtlasNode.elements())
 		{
-			var frame:Frame = {
+			final frame:Frame = {
 				name: child.get("name"),
 				sourceX: Std.parseFloat(child.get("x")),
 				sourceY: Std.parseFloat(child.get("y")),

@@ -11,10 +11,10 @@ class Group<T:Basic> extends Basic
 	{
 		if (value > 0 && value != maxSize)
 		{
-			var i:Int = members.length - 1;
+			final i = members.length - 1;
 			while (i > 0)
 			{
-				final basic:Basic = members.splice(i, 1)[0];
+				final basic:Basic = cast members.splice(i, 1)[0];
 				if (basic != null)
 					basic.destroy();
 			}
@@ -39,7 +39,7 @@ class Group<T:Basic> extends Basic
 	{
 		if (basic != null)
 		{
-			final index:Int = members.indexOf(basic);
+			final index = members.indexOf(basic);
 			if (index > -1)
 			{
 				members.splice(index, 1);

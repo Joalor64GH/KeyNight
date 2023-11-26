@@ -28,7 +28,7 @@ class Note extends Sprite
 		{
 			holdSprite.load(Assets.getTexture("hold"));
 
-			var startY:Float = height / 2;
+			var startY = height / 2;
 			for (i in 0...holdLength)
 			{
 				if (i == holdLength - 1)
