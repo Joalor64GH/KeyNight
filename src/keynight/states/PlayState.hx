@@ -22,6 +22,10 @@ class PlayState extends State
 
 		music = Assets.getMusic("testSong");
 
+		final bg = new Sprite().load(Assets.getTexture("bg"));
+		bg.alpha = 0.3;
+		add(bg);
+
 		receptors = new Group<Sprite>();
 		add(receptors);
 
@@ -40,10 +44,10 @@ class PlayState extends State
 		notes = new Group<Note>();
 		add(notes);
 
-		notes.add(new Note(12800.0, 0, 3));
-		notes.add(new Note(13199.999, 1, 3));
-		notes.add(new Note(13599.999, 2, 3));
-		notes.add(new Note(13999.999, 3, 3));
+		notes.add(new Note(400, 0, 3));
+		notes.add(new Note(435, 1, 3));
+		notes.add(new Note(470, 2, 3));
+		notes.add(new Note(500, 3, 3));
 
 		Rl.playMusicStream(music);
 	}

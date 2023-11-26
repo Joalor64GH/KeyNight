@@ -326,7 +326,7 @@ class Sprite extends Basic
 			// set render alpha
 			_renderColor.a = cast Math.min(255 * alpha, 255);
 
-			// draw the whole thing
+			// draw the sprite
 			Rl.drawTexturePro(frame != null ? frames.texture : texture, _rect, _rect2, _renderOrigin, angle, _renderColor);
 		}
 	}
